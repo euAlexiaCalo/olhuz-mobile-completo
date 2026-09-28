@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text, ScrollView, ActivityIndicator } from "react-native";
 import { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import type { AppStackParamList } from "../../../navigation/AppNavigator";
-import { BottomTabParamList } from "../../../navigation/BottomTabNavigator";
+import type { AppStackParamList } from "../../../../navigation/AppNavigator";
+import { BottomTabParamList } from "../../../../navigation/BottomTabNavigator";
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { ButtonCard } from "../../../shared/components/ButtonCard";
+import { ButtonCard } from "../../../../shared/components/ButtonCard";
 import { styles } from "../styles/homeStyles";
 
 import { Aperture, ImageUp, ShieldCheck } from "lucide-react-native";
-import { InfoCard } from "../../../shared/components/InfoCard";
+import { InfoCard } from "../../../../shared/components/InfoCard";
 import { useHomeViewModel } from "../viewModel/useHomeViewModel";
 
 type Props = CompositeScreenProps<

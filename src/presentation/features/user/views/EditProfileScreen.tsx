@@ -1,5 +1,10 @@
 // Importações do React
-import React, { useState } from "react";
+import React from "react";
+import { styles } from "../styles/editProfileStyles";
+
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AppStackParamList } from "../../../../navigation/AppNavigator";
+import { useEditProfileViewModel } from "../viewModels/useEditProfileViewModel";
 
 // Componentes do React Native
 import {
@@ -8,6 +13,7 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 
 // Ícones
@@ -19,134 +25,142 @@ import {
   FileUser,
 } from "lucide-react-native";
 
+type Props = NativeStackScreenProps<AppStackParamList, "EditProfile">;
+
 /**
  * Tela Editar Perfil
  */
-export const EditProfileScreen = () => {
+export function EditProfileScreen({ navigation }: Props) {
+  const {
+    user,
+    formData,
+    isLoading,
+    handleInputChange,
+    handleUpdateProfile,
+  } = useEditProfileViewModel();
 
-  // States
+  const handleSave = () => {
+    handleUpdateProfile(() => {
+      navigation.goBack();
+    });
+  };
 
-  const [nome, setNome] = useState("Nome Sobrenome");
-  const [dataNascimento] = useState("00/00/0000");
-  const [email, setEmail] = useState("email@email.com");
-  const [telefone, setTelefone] = useState("(11) 99999-9999");
-  const [cpf] = useState("000.000.000-00");
-
-  
-
-
-  /**
-   * Dados exibidos na tela
-   */
-  const dadosUsuario = [
-    {
-      id: "1",
-      label: "Nome Completo",
-      value: nome,
-      editable: true,
-      icon: User,
-    },
-    {
-      id: "2",
-      label: "Data de Nascimento",
-      value: dataNascimento,
-      editable: false,
-      icon: CalendarDays,
-    },
-    {
-      id: "3",
-      label: "E-mail",
-      value: email,
-      editable: true,
-      icon: Mail,
-    },
-    {
-      id: "4",
-      label: "Telefone",
-      value: telefone,
-      editable: true,
-      icon: Phone,
-    },
-    {
-      id: "5",
-      label: "CPF",
-      value: cpf,
-      editable: false,
-      icon: FileUser,
-    },
-  ];
-
-  /**
-   * JSX DA TELA
-   * IMPORTANTE:
-   * React Navigation exige que a Screen retorne JSX
-   */
- return (
-  <ScrollView
-    style={styles.container}
-    contentContainerStyle={styles.scrollContainer}
-  >
-    <View style={styles.card}>
-
-      <Text style={styles.title}>
-        Informações do Perfil
-      </Text>
-
-      {dadosUsuario.map((item) => {
-        const Icon = item.icon;
-
-        return (
-          <View
-            key={item.id}
-            style={styles.fieldContainer}
-          >
-            <View style={styles.iconContainer}>
-              <Icon size={20} color="#1D3D87" />
-            </View>
-
-            <View style={{ flex: 1 }}>
-              <Text style={styles.label}>
-                {item.label}
-              </Text>
-
-              <TextInput
-                style={[
-                  styles.input,
-                  !item.editable && styles.inputDisabled,
-                ]}
-                value={item.value}
-                editable={item.editable}
-              />
-            </View>
-          </View>
-        );
-      })}
-
-      {/* BOTÃO SALVAR */}
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => {
-          console.log("Salvar clicado");
-        }}
-      >
-        <Text style={styles.buttonText}>
-          Salvar Alterações
+  return (
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.scrollContainer}
+    >
+      <View style={styles.card}>
+        <Text style={styles.title}>
+          Informações do Perfil
         </Text>
-      </TouchableOpacity>
 
-      <TouchableOpacity
-  style={styles.cancelButton}
-  onPress={() => {
-    console.log("Cancelar clicado");
-  }}
->
-  <Text style={styles.cancelButtonText}>
-    Cancelar
-  </Text>
-</TouchableOpacity>
+        {/* Nome Completo (Editável) */}
+        <View style={styles.fieldContainer}>
+          <View style={styles.iconContainer}>
+            <User size={20} color="#1D3D87" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>Nome completo</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite seu nome completo"
+              placeholderTextColor="#888"
+              value={formData.fullName}
+              onChangeText={(text) => handleInputChange("fullName", text)}
+            />
+          </View>
+        </View>
 
-    </View>
-  </ScrollView>
-  
-);
-};
+        {/* E-mail (Apenas leitura - vindo do usuário logado) */}
+        <View style={styles.fieldContainer}>
+          <View style={styles.iconContainer}>
+            <Mail size={20} color="#1D3D87" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>E-mail</Text>
+            <TextInput
+              style={[styles.input, styles.inputDisabled]}
+              value={user?.email || ""}
+              editable={false}
+            />
+          </View>
+        </View>
+
+        {/* CPF (Apenas leitura) */}
+        <View style={styles.fieldContainer}>
+          <View style={styles.iconContainer}>
+            <FileUser size={20} color="#1D3D87" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>CPF</Text>
+            <TextInput
+              style={[styles.input, styles.inputDisabled]}
+              value={user?.cpf || ""}
+              editable={false}
+            />
+          </View>
+        </View>
+
+        {/* Telefone (Editável) */}
+        <View style={styles.fieldContainer}>
+          <View style={styles.iconContainer}>
+            <Phone size={20} color="#1D3D87" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>Telefone</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="(00) 00000-0000"
+              placeholderTextColor="#888"
+              keyboardType="phone-pad"
+              value={formData.phoneNumber}
+              onChangeText={(text) => handleInputChange("phoneNumber", text)}
+            />
+          </View>
+        </View>
+
+        {/* Data de Nascimento (Apenas leitura) */}
+        <View style={styles.fieldContainer}>
+          <View style={styles.iconContainer}>
+            <CalendarDays size={20} color="#1D3D87" />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.label}>Data de nascimento</Text>
+            <TextInput
+              style={[styles.input, styles.inputDisabled]}
+              value={user?.birthDate || ""}
+              editable={false}
+            />
+          </View>
+        </View>
+
+        {/* BOTÃO SALVAR */}
+        <TouchableOpacity
+          style={[styles.buttonContainer, isLoading && { opacity: 0.7 }]}
+          onPress={handleSave}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <ActivityIndicator color="#FFF" />
+          ) : (
+            <Text style={styles.buttonText}>
+              Salvar Alterações
+            </Text>
+          )}
+        </TouchableOpacity>
+
+        {/* BOTÃO CANCELAR */}
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => navigation.goBack()}
+          disabled={isLoading}
+        >
+          <Text style={styles.cancelButtonText}>
+            Cancelar
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
+  );
+}

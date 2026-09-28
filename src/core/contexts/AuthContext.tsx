@@ -2,7 +2,7 @@
 import React, { createContext, useState, useEffect, useContext, ReactNode } from "react";
 import { secureStorage } from "../storage/secureStorage";
 import { STORAGE_KEYS } from "../storage/storageKeys";
-import { UserResponse, AuthResponseData } from "../../features/auth/types/authResponses";
+import { UserResponse, AuthResponseData } from "../../presentation/features/auth/types/authResponses";
 
 // TIPAGEM DAS FUNÇÕES QUE VAI EXPORTAR PARA O APP
 interface AuthContextData {

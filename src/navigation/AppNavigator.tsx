@@ -29,6 +29,7 @@ const Stack = createNativeStackNavigator<AppStackParamList>();
 export const AppNavigator = () => {
     return (
         <Stack.Navigator
+            id="AppStack"
             screenOptions={{
                 headerShown: false,
                 animation: 'fade',

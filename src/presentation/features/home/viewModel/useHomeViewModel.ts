@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Alert, Platform, ToastAndroid } from "react-native";
-import { useAuth } from "../../../core/contexts/AuthContext";
-import { takePhoto } from "../../../shared/utils/takePhoto";
-import { pickDocumentOrImage } from "../../../shared/utils/pickDocumentOrImage";
+import { useAuth } from "../../../../core/contexts/AuthContext";
+import { takePhoto } from "../../../../shared/utils/takePhoto";
+import { pickDocumentOrImage } from "../../../../shared/utils/pickDocumentOrImage";
 import { readingService } from "../../reading/services/readingService";
 
 export const useHomeViewModel = () => {

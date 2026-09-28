@@ -3,22 +3,23 @@ import {
   View,
   Text,
   TextInput,
-  StyleSheet,
   TouchableOpacity,
-  Image,
+  ActivityIndicator,
 } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { User } from 'lucide-react-native';
-import { RootStackParamList } from "../../../../App";
-import { TokenViewModel } from "./ViewModelToken";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AuthStackParamList } from "../../../../navigation/AuthNavigator";
+import { useTokenViewModel } from "../viewModels/useTokenViewModel";
 import { styles } from "../styles/tokenStyles";
-export function TokenScreen() {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const { email, setEmail, enviarToken } = TokenViewModel(navigation);
+type Props = NativeStackScreenProps<AuthStackParamList, "ForgotPassword">;
+
+export function TokenScreen({ navigation, route }: Props) {
+  // Captura o e-mail da rota se houver
+    const initialEmail = route.params?.email ?? "";
+
+  const { email, handleEmailChange, handleRequestToken, isLoading } =
+    useTokenViewModel(initialEmail);
 
   return (
     <View style={styles.container}>
@@ -45,22 +46,22 @@ export function TokenScreen() {
           keyboardType="email-address"
           autoCapitalize="none"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => handleEmailChange("email", text)}
         />
       </View>
 
       <TouchableOpacity
-        style={styles.button}
-        onPress={enviarToken}
+        style={[styles.button, isLoading && { opacity: 0.7 }]}
+        onPress={() => handleRequestToken((submittedEmail) => navigation.navigate("VerifyToken", { email: submittedEmail}))}
+        disabled={isLoading}
       >
-        {/* NAO ESQUECER DE COLOCAR IMAGEM NO BOTAO DE ENVIAR <Image
-          source={require("../../assets/iconentrar.png")}
-          style={styles.icon}
-        /> */}
-
-        <Text style={styles.buttonText}>
-          Enviar token
-        </Text>
+        {isLoading ? (
+          <ActivityIndicator color="#FFFFFF" />
+        ) : (
+          <Text style={styles.buttonText}>
+            Enviar token
+          </Text>
+        )}
       </TouchableOpacity>
 
       <Text style={styles.footer}>

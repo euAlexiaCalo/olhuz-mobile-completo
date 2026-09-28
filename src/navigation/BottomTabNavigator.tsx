@@ -19,6 +19,7 @@ const Tab = createBottomTabNavigator<BottomTabParamList>();
 export const BottomTabNavigator = () => {
     return (
         <Tab.Navigator
+            id = "BottomTab"
             initialRouteName="Home"
             screenOptions={({ route }) => ({
                 headerShown: false,

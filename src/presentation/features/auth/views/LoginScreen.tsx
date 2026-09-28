@@ -5,27 +5,26 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  ActivityIndicator,
 } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../../../App";
-import { ViewModelLogin }from "../viewModels/ViewModelLogin";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { AuthStackParamList } from "../../../../navigation/AuthNavigator";
+import { useLoginViewModel } from "../viewModels/useLoginViewModel";
 import { LogIn } from "lucide-react-native";
 import { styles } from "../styles/loginStyles";
 
-export const LoginScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+type Props = NativeStackScreenProps<AuthStackParamList, "Login">;
 
+export function LoginScreen({ navigation }: Props) {
   const {
-    email,
-    senha,
+    formData,
     mostrarSenha,
-    onChange,
     toggleMostrarSenha,
-  } = ViewModelLogin();
+    isLoading,
+    handleInputChange,
+    handleLogin,
+  } = useLoginViewModel();
 
   return (
     <View style={styles.container}>
@@ -45,8 +44,10 @@ export const LoginScreen = () => {
           style={styles.input}
           placeholder="email@email.com"
           placeholderTextColor="#888"
-          value={email}
-          onChangeText={(text) => onChange("email", text)}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          value={formData.email}
+          onChangeText={(text) => handleInputChange("email", text)}
         />
 
         <Text style={styles.label}>Senha</Text>
@@ -56,8 +57,8 @@ export const LoginScreen = () => {
           placeholder="*******"
           placeholderTextColor="#888"
           secureTextEntry={!mostrarSenha}
-          value={senha}
-          onChangeText={(text) => onChange("senha", text)}
+          value={formData.password}
+          onChangeText={(text) => handleInputChange("password", text)}
         />
 
         <TouchableOpacity onPress={toggleMostrarSenha}>
@@ -66,12 +67,8 @@ export const LoginScreen = () => {
           </Text>
         </TouchableOpacity>
 
-        <TouchableOpacity>
-          <Text style={styles.link}>Ouvir senha</Text>
-        </TouchableOpacity>
-
         <TouchableOpacity
-          onPress={() => navigation.navigate("TokenScreen")}
+          onPress={() => navigation.navigate("TokenScreen" as never)}
         >
           <Text style={styles.esqueci}>
             Esqueci minha senha
@@ -79,19 +76,26 @@ export const LoginScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.btnEntrar}>
-           <LogIn
-                    size={24}
-                    color="#FFFFFF"
-                    strokeWidth={2.9}
-          
-                  />
-       
-        <Text style={styles.txtBtn}>
-          Entrar
-        </Text>
+      <TouchableOpacity 
+        style={[styles.btnEntrar, isLoading && { opacity: 0.7 }]} 
+        onPress={handleLogin}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <ActivityIndicator color="#FFFFFF" />
+        ) : (
+          <>
+            <LogIn
+              size={24}
+              color="#FFFFFF"
+              strokeWidth={2.9}
+            />
+            <Text style={styles.txtBtn}>
+              Entrar
+            </Text>
+          </>
+        )}
       </TouchableOpacity>
     </View>
   );
-};
-
+}

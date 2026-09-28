@@ -1,10 +1,13 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { AppNavigator } from "./src/navigation/AppNavigation";
+import React from 'react';
+import { StatusBar } from 'expo-status-bar';
+import { AuthProvider } from './src/core/contexts/AuthContext';
+import { RootNavigator } from './src/navigation/RootNavigator';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <AuthProvider>
+      <StatusBar style="inverted" hidden={false} />
+      <RootNavigator />
+    </AuthProvider>
   );
 }

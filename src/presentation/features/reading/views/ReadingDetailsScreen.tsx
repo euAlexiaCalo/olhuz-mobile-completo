@@ -11,7 +11,7 @@ import { styles } from "../styles/readingsDetailsStyles";
 import { getFileUrl } from "../../../../shared/utils/fileUtils";
 
 const Tab = createMaterialTopTabNavigator();
-const DEFAULT_IMAGE = require("../../../assets/img/por-do-sol-na-praia.jpg");
+const DEFAULT_IMAGE = require("../../../../assets/img/por-do-sol-na-praia.jpg");
 
 export function ReadingDetailsScreen() {
   const {
