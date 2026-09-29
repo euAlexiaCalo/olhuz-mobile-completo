@@ -2,13 +2,16 @@
 import Constants from 'expo-constants';
 
 // Captura o IP local da máquina e remove a porta do Expo
-const debuggerHost = Constants.expoConfig?.hostUri;
+//const debuggerHost = Constants.expoConfig?.hostUri;
 
-const localIp = debuggerHost
+//const localIp = debuggerHost
     ? debuggerHost.split(':')[0]
     : '10.0.2.2';
 
-export const BASE_URL = `http://${localIp}:5208/api`;
+//export const BASE_URL = `http://${localIp}:5208/api`;
+
+// URL da API hospedada no Render
+export const BASE_URL = 'https://olhuz-api.onrender.com/api';
 
 export const ENDPOINTS = {
     AUTH: {
