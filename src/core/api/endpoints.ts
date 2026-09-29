@@ -1,6 +1,4 @@
 // Concentra a BASE_URL e todas as rotas mapeadas na API
-import Constants from 'expo-constants';
-
 // Captura o IP local da máquina e remove a porta do Expo
 //const debuggerHost = Constants.expoConfig?.hostUri;
 
