@@ -4,7 +4,7 @@
   "main": "index.ts",
   "dependencies": {
     "@expo/vector-icons": "^15.1.1",
-    "@react-native-community/slider": "^5.2.1",
+    "@react-native-community/slider": "5.2.0",
     "@react-navigation/bottom-tabs": "^7.19.2",
     "@react-navigation/material-top-tabs": "^7.7.2",
     "@react-navigation/native": "^7.4.1",
@@ -13,16 +13,19 @@
     "expo": "~57.0.25",
     "expo-clipboard": "~57.0.2",
     "expo-document-picker": "~57.0.2",
+    "expo-font": "~57.0.4",
     "expo-image-picker": "~57.0.20",
     "expo-linear-gradient": "~57.0.2",
     "expo-secure-store": "~57.0.4",
     "expo-status-bar": "~57.0.1",
+    "expo-updates": "~57.0.23",
     "lucide-react-native": "^1.48.0",
     "react": "19.2.3",
     "react-native": "0.86.3",
     "react-native-pager-view": "8.0.2",
-    "react-native-safe-area-context": "^5.10.0",
-    "react-native-screens": "^4.28.0"
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "~4.26.0",
+    "react-native-svg": "15.15.4"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",

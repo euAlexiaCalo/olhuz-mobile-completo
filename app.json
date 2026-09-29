@@ -4,7 +4,7 @@
     "slug": "olhuz-mobile-completo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/img/favicon-olhuz.png",
+    "icon": "./src/assets/img/favicon-olhuz.png",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true
@@ -12,17 +12,30 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/img/favicon-olhuz.png",
-        "backgroundImage": "./assets/img/favicon-olhuz.png",
-        "monochromeImage": "./assets/img/favicon-olhuz.png"
+        "foregroundImage": "./src/assets/android-icon-foreground.png",
+        "backgroundImage": "./src/assets/android-icon-background.png",
+        "monochromeImage": "./src/assets/android-icon-monochrome.png"
       },
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.eualexiacalo.olhuzmobilecompleto"
     },
     "web": {
-      "favicon": "./assets/img/favicon-olhuz.png"
+      "favicon": "./src/assets/img/favicon-olhuz.png"
     },
     "plugins": [
-      "expo-secure-store"
-    ]
+      "expo-secure-store",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "fedab2d4-3f0f-4e9a-9510-93b9c61cdde0"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/fedab2d4-3f0f-4e9a-9510-93b9c61cdde0"
+    }
   }
 }
