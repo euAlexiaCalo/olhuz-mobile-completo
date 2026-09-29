@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Switch, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Switch, ActivityIndicator, ScrollView } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { styles } from "../styles/preferencesStyles";
 import { usePreferencesViewModel } from "../viewModels/usePreferencesViewModel";
@@ -21,7 +21,7 @@ export function PreferencesScreen() {
     return (
         <View style={styles.container}>
             
-            {/* Cabeçalho Azul */}
+            {/* Cabeçalho Azul (Fixo no topo) */}
             <View style={styles.headerContainer}>
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerTitle}>Configurações</Text>
@@ -30,8 +30,11 @@ export function PreferencesScreen() {
                 <View style={styles.iconPlaceholder} />
             </View>
 
-            {/* Conteúdo das Configurações */}
-            <View style={styles.contentContainer}>
+            {/* Conteúdo das Configurações dentro do ScrollView */}
+            <ScrollView 
+                contentContainerStyle={styles.contentContainer}
+                showsVerticalScrollIndicator={false}
+            >
                 
                 {/* Leitura de Tela */}
                 <View style={styles.rowSetting}>
@@ -164,7 +167,7 @@ export function PreferencesScreen() {
                     </View>
                 </View>
 
-            </View>
+            </ScrollView>
         </View>
     );
 }
